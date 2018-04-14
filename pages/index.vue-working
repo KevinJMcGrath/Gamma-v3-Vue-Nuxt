@@ -1,0 +1,18 @@
+<template>
+	<section>
+		<h1>Hello!</h1>
+		<h2>Store value: {{$store.state.userVar1}}</h2>
+	</section>
+</template>
+
+<script>
+	export default {
+		asyncData (context) {
+			console.log('Page Load: asyncData...')
+		}
+    }
+</script>
+
+<style>
+	
+</style>
