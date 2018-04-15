@@ -9,44 +9,41 @@ const moment = require('moment')
 Vue.use(Vuex)
 
 const store = () => new Vuex.Store({
-
+	strict: true,
 	//Establishing the fields for the store
 	state: {
-		count: 0,
-		auth: null,
-		fileData: null,
 		status: {
 			guid: ''
 		},
 		email: {
-			email_address: 'kevin.mcgrath@symphony.com',
+			email_address: 'stanz@ghostbusters.net',
 			is_verified: 'false'
 		},
 		user: {
 			firstname: 'Kevin',
 			lastname: 'McGrath',
-			mobilephone: '215-828-6986'
+			phone: '215-828-6986'
 		},
 		company: {
 			name: 'Ghostbusters, Inc.',
 			industry: 'Consumer-Services'
 		},
 		service: {
-			subdomain: 'mycompany',
+			sub_domain: 'mycompany',
 			seats: 10,
-			directoryname: 'My Company',
-			promocode: 'GAMMA-2018'
+			vanity_name: 'My Company',
+			promo_code: 'GAMMA-2018'
 		},
 		legal: {
-			terms: true
+			terms_accepted: true
 		},
 		billing: {
 			type: 'card',
 			address1: '14 North Moore Street',
 			address2: 'Tribeca',
 			city: 'New York',
-			state: 'NY',
-			zip: '10013',
+			billing_state: 'NY',
+			zip_code: '10013',
 			country: 'USA',
 			stripe_token: {}
 		},
@@ -56,65 +53,78 @@ const store = () => new Vuex.Store({
 			minimum_seats: 25		
 		}
 	},
-
 	//Creating properties for updating the fields
 	mutations: {
-		incrementCounter(state) {
-			state.count++
-
-			SetLog('Load Count: ' + state.count)
-
+		SET_GUID(state, guid) {
+			state.status.guid = guid
 		},
-		update(state, data) {
-			state.auth = data			
+		SET_EMAIL(state, email) {
+			state.email.email_address = email
 		},
-		set_file(state, data) {
-			state.fileData = data
+		SET_FNAME(state, firstname) {
+			state.user.firstname = firstname
+			console.log('fname: ' + state.user.firstname)
+		},
+		SET_LNAME(state, lastname) {
+			state.user.lastname = lastname
+		},
+		SET_PHONE(state, phone) {
+			state.user.phone = phone
+		},
+		SET_COMPANY(state, company) {
+			state.company.name = company
+		},
+		SET_INDUSTRY(state, industry) {
+			state.company.industry = industry
+		},
+		SET_SEATS(state, seats) {
+			state.service.seats = seats
+		},
+		SET_VANITYNAME(state, vanity_name) {
+			state.service.vanity_name = vanity_name
+		},
+		SET_PROMOCODE(state, promo_code) {
+			state.service.promo_code = promo_code
+		},
+		SET_TANDC(state, terms_accepted) {
+			state.legal.terms_accepted = terms_accepted
+		},
+		SET_ADD1(state, address1) {
+			state.billing.address1 = address1
+		},
+		SET_ADD2(state, address2) {
+			state.billing.address2 = address2
+		},
+		SET_CITY(state, city) {
+			state.billing.city = city
+		},
+		SET_BILLING_STATE(state, billing_state) {
+			state.billing.billing_state = billing_state
+		},
+		SET_ZIP(state, zip_code) {
+			state.billing.zip_code = zip_code
+		},
+		SET_STRIPE_TOKEN(state, tokenObj) {
+			state.billing.stripe_token = tokenObj
 		}
-	},
 
-	// the nuxtServerInit method is called before rendering the page
-	// { commit } is "argument destructuring" of the context object,
-	// extracting the context.commit method.
+	},
+	getters: {
+		// Use this to encapsulate computed values for later use. 
+		// https://vuex.vuejs.org/en/getters.html
+	},	
 	actions: {
 		async nuxtServerInit({ commit }, { req, res }) {
+
+			// The nuxtServerInit method is called before rendering the THE FIRST PAGE
+			// for a new request coming in to the server. It is NEVER called again.
+			// { commit } is "argument destructuring" of the context object,
+			// extracting the context.commit method.
+
+			console.log('_____________------------**********nuxtServerInit**********------------_____________')			
 			
-			console.log('_____________------------**********nuxtServerInit**********------------_____________')
-			
-			//commit('update', await testFunc2())
+		}
 
-			
-			
-		},
-		async UPDATE_RAND({ commit }) {
-
-			SetLog('UPDATE_RAND')
-
-			commit('set_file', await getData())
-
-			commit('update', await testFunc2())
-		},
-		increment({commit}) {
-			return new Promise((resolve, reject) => {
-
-				SetLog('increment')
-
-				commit('incrementCounter')
-				resolve(true)
-			})
-		}/*,
-		async loadFile({commit}, pageName) {
-			console.log('loading file: ' + pageName + '.txt')
-			let filePath = './static/' + pageName + '.txt'
-			let fileType = 'UTF-8'
-
-			//const fileData = await ReadFileData()
-			const fileData = await getData()
-
-			commit('fileData', fileData)
-
-			console.log('File load complete')
-		},*/
 		
 	}
 

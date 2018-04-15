@@ -59,8 +59,6 @@
             }
         },
         asyncData (pageContext) {
-            console.log(moment().format('MM-DD-YYYY HH:mm:ss.SSS Z') + ' | Async Page Loader | Index.vue'  + (process.server ? ' | Server-side' : ' | Client-side'))
-
             
         },
         mounted() {
@@ -68,18 +66,17 @@
         },
         methods: {
             handleStartFlow () {
-
+                /*
                 axios.post('/api/verify', { data1: 'bob', data2: 'alice' }).then(function(response) {
                     console.log('API Response: ')
                     console.log(response)
                 }).catch(function (error) {
                     console.error(error);
-                })
+                })*/
 
-                //this.$router.push({name: "contact"}); 
+                this.$router.push({ name: "contact", query: { sseid: '1234567890', email: 'kevin.mcgrath@symphony.com' } }); 
             }
-        },
-        middleware: 'indexTest'
+        }
     }
 </script>
 <style scoped>

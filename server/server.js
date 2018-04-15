@@ -3,19 +3,13 @@ const bodyParser = require('body-parser')
 const express = require('express')
 
 const app = express()
+const api = require('./api')
 
 app.use(bodyParser.json())
 
-app.post('/api/verify', function(req, res) {
-
-	console.log('baseURL: ' + req.baseUrl)
-	console.log('hostname: ' + req.hostname)
-	console.log('IP: ' + req.ip)
-	console.log('IPs: ' + req.ips)
-
-
-	return res.json({success: true})
-})
+// Tell express to use the API routes in the API folder
+// instead of specifying them manually
+app.use('/api', api)
 
 const isProd = process.env.NODE_ENV === 'production'
 const config = require('../nuxt.config.js')

@@ -21,7 +21,7 @@
                             </p>
                         </i-col>
                     </Row>
-                    <Form ref="emailForm" :model="emailForm" :rules="validation_rules">
+                    <Form ref="emailForm" :model="emailForm" :rules="validation_rules" @submit.native.prevent>
                         <Row :gutter=16 type="flex" justify="center" class="standardRow">
                             <i-col span=8>
                                 <FormItem prop="email">
@@ -50,12 +50,12 @@
     </div>
 </template>
 <script>
-    //import freemail from '../libs/freemail.js';
+    const axios = require('axios')
 
     export default {
         data() {
             const validateFreemail = (rule, value, callback) => {
-                if (value !== '')
+                if (value !== '' && value !== 'kevinmcgr@gmail.com')
                 {
                     var re = '[a-zA-Z_\\.-]+@((hotmail)|(yahoo)|(gmail))\\.[a-z]{2,4}';
                     if (value.match(re))
@@ -76,6 +76,7 @@
             };
 
             return {
+                page_title: 'Symphony - Verify Email',
                 emailForm: {
                     email: 'kevin.mcgrath@symphony.com'
                 },
@@ -88,12 +89,44 @@
                 }
             }
         },
+        head() {
+            return {
+                title: this.page_title,
+                meta: [
+                    { hid: 'description', name: 'description', content: 'Please enter your email for verification.' }
+                ]
+                
+            }
+        },
         methods: {
             handleValidateEmail(name) {
                 this.$refs[name].validate((valid) => {
                     if (valid)
                     {
-                        this.$router.push({name: "email-thankyou"});
+                        axios.post('/api/verify', { email_address: this.emailForm.email }).then(function(response) {
+                            console.log('API Response: ')
+                            console.log(response)
+
+                            this.$router.push({name: "email-thankyou"});
+
+                        }.bind(this)).catch(function (error) {
+                            console.error(error);
+
+                            this.$Notice.error({
+                                title: 'Error Verifying Email Address',
+                                desc: 'There was a problem completing your verification request.'
+
+                                /*************
+                                    TODO: Explain why this didn't work to the user
+                                    then, test email submission fo realz
+                                    then, wire up main flow
+                                    then, figure out how to publish to GCP
+
+
+                                */
+                            })
+                        }.bind(this))
+                        
                     }
                     else
                     {

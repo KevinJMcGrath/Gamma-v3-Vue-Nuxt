@@ -39,27 +39,30 @@
                                     <FormItem label="First Name" prop="firstname">                                        
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <i-input v-model="contactForm.firstname" @on-change="fieldChange('fname')"></i-input>       
+                                                <!--<i-input v-model="contactForm.firstname" @on-change="fieldChange('fname')"></i-input>-->
+                                                <i-input v-model="input_firstname"></i-input>
                                             </i-col>
                                             <i-col span=2>
                                                 
                                             </i-col>
                                         </Row>
                                     </FormItem>
-                                    <FormItem label="Last Name" prop="lastname">                                        
+                                    <FormItem label="Last Name" prop="lastname">
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <i-input v-model="contactForm.lastname" @on-change="fieldChange('lname')"></i-input>        
+                                                <!--<i-input v-model="contactForm.lastname" @on-change="fieldChange('lname')"></i-input>-->
+                                                <i-input v-model="input_lastname"></i-input>
                                             </i-col>
                                             <i-col span=2>
                                                 
                                             </i-col>
                                         </Row>
                                     </FormItem>
-                                    <FormItem label="Phone" prop="mobilephone">
+                                    <FormItem label="Phone" prop="phone">
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <i-input v-model="contactForm.mobilephone" @on-change="fieldChange('mobilep')"></i-input>        
+                                                <!--<i-input v-model="contactForm.mobilephone" @on-change="fieldChange('mobilep')"></i-input>-->
+                                                <i-input v-model="input_phone"></i-input>
                                             </i-col>
                                             <i-col span=2>
                                                 <Tooltip placement="right">
@@ -82,9 +85,6 @@
                             <i-col :xs=6 :sm=5 :md=4 :lg=3 class-name="nextButtonCol">
                                 <Button type="primary" size="large" @click="handleGotoCompany">Continue</Button>
                             </i-col>
-                            <i-col span=4>
-                                <nuxt-link to="/">BACK</nuxt-link>
-                            </i-col>
                         </Row>
                     </Layout>
                 </Content>
@@ -94,9 +94,6 @@
     </div>  
 </template>
 <script>
-    import globalState from '../libs/interviewState.js';
-    const moment = require('moment')
-
     export default {
         data() {
             return {
@@ -104,10 +101,7 @@
                 contactForm: {
                     firstname: '',
                     lastname: '',
-                    email: '',
-                    dayphone: '',
-                    mobilephone: '',
-                    chkTest: false
+                    phone: ''
                 },
                 validation_rules: { 
                     firstname: [
@@ -116,7 +110,7 @@
                     lastname: [
                         { required: true, message: 'Please enter your last name.', trigger: 'blur'}
                     ],
-                    mobilephone: [
+                    phone: [
                         { required: true, message: 'Please enter your daytime phone number.', trigger: 'blur'}
                     ]
 
@@ -132,25 +126,62 @@
                 
             }
         },
-        asyncData (pageContext) {
-            console.log(moment().format('MM-DD-YYYY HH:mm:ss.SSS Z') + ' | Async Page Loader | Contact.vue'  + (process.server ? ' | Server-side' : ' | Client-side'))
+        fetch({ store, params, query, redirect }) {
+
+            if(!(store.state.status.guid && store.state.email.email_address))
+            {
+                //Load query parameters
+                if (query.sseid && query.email)
+                {
+                    store.commit('SET_GUID', query.sseid)
+                    store.commit('SET_EMAIL', query.email)
+                }
+                else
+                {
+                    //I might need to return an error here instead.
+                    redirect('email')
+                }
+            }
+            
         },
         mounted: function() {
+            console.log('GUID: ' + this.$store.state.status.guid)
+            console.log('EMail: ' + this.$store.state.email.email_address)
 
-            if (globalState.user)
-            {
-                this.contactForm.firstname = globalState.user.firstname;
-                this.contactForm.lastname = globalState.user.lastname;
-                this.contactForm.email = globalState.user.email;
-                this.contactForm.dayphone = globalState.user.dayphone;
-                this.contactForm.mobilephone = globalState.user.mobilephone;
+            this.contactForm.firstname = this.$store.state.user.firstname
+            this.contactForm.lastname = this.$store.state.user.lastname
+            this.contactForm.phone = this.$store.state.user.phone
+        },
+        computed: {
+            // Using computed properties for two-way binding with Vuex
+            input_firstname: {
+                get () {
+                    return this.$store.state.user.firstname
+                },
+                set (value) {
+                    // I'm intentionally adding side effects to make the validation rules work. Not ideal
+                    this.contactForm.firstname = value;
+                    this.$store.commit('SET_FNAME', value)
+                }
+            },
+            input_lastname: {
+                get () {
+                    return this.$store.state.user.lastname
+                },
+                set (value) {
+                    this.contactForm.lastname = value;
+                    this.$store.commit('SET_LNAME', value)
+                }
+            },
+            input_phone: {
+                get () {
+                    return this.$store.state.user.phone
+                },
+                set (value) {
+                    this.contactForm.phone = value;
+                    this.$store.commit('SET_PHONE', value)
+                }
             }
-
-            console.log(moment().format('MM-DD-YYYY HH:mm:ss.SSS Z') + ' | Page Mounted | Contact.vue'  + (process.server ? ' | Server-side' : ' | Client-side'))
-
-            //this.$store.commit('increment')
-
-            console.log(moment().format('MM-DD-YYYY HH:mm:ss.SSS Z') + ' | Simulated Auth Token: ' + this.$store.state.auth)
         },
         methods: {
             //I can pass the $event parameter inline on the element and that will give me the DOM event
@@ -189,7 +220,7 @@
                 this.$refs['contactForm'].validate((valid) => {
                     if (valid)
                     {
-                        this.$router.push({name: "company"});        
+                        this.$router.push({ name: "company" });        
                     }
                     else
                     {
@@ -199,13 +230,9 @@
                 })
             },
             handleBackButton() {
-                this.$store.dispatch('increment').then(() => {
-                    this.$router.push({name: "index"})    
-                })
-                
+                this.$router.push({ name: "index" })                
             }
-        },
-        middleware: 'contactTest'
+        }
     }
 </script>
 <style scoped>
