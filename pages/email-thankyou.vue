@@ -58,7 +58,17 @@
         data() {            
 
             return {
+                page_title: 'Symphony - Thank You',
                 emailAddress: ''
+            }
+        },
+        head() {
+            return {
+                title: this.page_title,
+                meta: [
+                    { hid: 'description', name: 'description', content: 'Please enter your email for verification.' }
+                ]
+                
             }
         },
         mounted: function() {

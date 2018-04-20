@@ -29,7 +29,6 @@ const store = () => new Vuex.Store({
 			industry: 'Consumer-Services'
 		},
 		service: {
-			sub_domain: 'mycompany',
 			seats: 10,
 			vanity_name: 'My Company',
 			promo_code: 'GAMMA-2018'
@@ -51,7 +50,16 @@ const store = () => new Vuex.Store({
 			onetime_fees: 500,
 			pupm: 20,
 			minimum_seats: 25		
-		}
+		},
+		page_state: [
+			{ index: 0, name: "contact", completed: false },
+			{ index: 1, name: "company", completed: false },
+			{ index: 2, name: "service", completed: false },
+			{ index: 3, name: "legal", completed: false },
+			{ index: 4, name: "billing", completed: false },
+			{ index: 5, name: "summary", completed: false },
+			{ index: 6, name: "thank", completed: false }
+		]
 	},
 	//Creating properties for updating the fields
 	mutations: {
@@ -63,7 +71,6 @@ const store = () => new Vuex.Store({
 		},
 		SET_FNAME(state, firstname) {
 			state.user.firstname = firstname
-			console.log('fname: ' + state.user.firstname)
 		},
 		SET_LNAME(state, lastname) {
 			state.user.lastname = lastname
@@ -106,12 +113,21 @@ const store = () => new Vuex.Store({
 		},
 		SET_STRIPE_TOKEN(state, tokenObj) {
 			state.billing.stripe_token = tokenObj
+		},
+		SET_PAGE_COMPLETE(state, page_name) {
+			state.page_state.find(page => page.name === page_name).completed = true
 		}
 
 	},
 	getters: {
 		// Use this to encapsulate computed values for later use. 
 		// https://vuex.vuejs.org/en/getters.html
+		// (x) => (y) => {} is called "curried" notation
+		// https://en.wikipedia.org/wiki/Currying
+		// 
+		getPageState: (state) => (page_name) => {
+			return state.page_state.find(page => page.name === page_name)
+		}
 	},	
 	actions: {
 		async nuxtServerInit({ commit }, { req, res }) {
@@ -143,16 +159,6 @@ function testFunc2() {
 			let vnum = Math.floor(Math.random()*20000) + new Date().getTime()
 			resolve(vnum)
 		}, 5000)
-	})
-}
-
-
-function testFunc() {
-	return new Promise(function (resolve, reject) {
-
-		SetLog('nuxtServerInit-testFunc')
-
-		resolve(true)
 	})
 }
 

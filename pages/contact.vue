@@ -39,7 +39,6 @@
                                     <FormItem label="First Name" prop="firstname">                                        
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <!--<i-input v-model="contactForm.firstname" @on-change="fieldChange('fname')"></i-input>-->
                                                 <i-input v-model="input_firstname"></i-input>
                                             </i-col>
                                             <i-col span=2>
@@ -50,7 +49,6 @@
                                     <FormItem label="Last Name" prop="lastname">
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <!--<i-input v-model="contactForm.lastname" @on-change="fieldChange('lname')"></i-input>-->
                                                 <i-input v-model="input_lastname"></i-input>
                                             </i-col>
                                             <i-col span=2>
@@ -61,7 +59,6 @@
                                     <FormItem label="Phone" prop="phone">
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <!--<i-input v-model="contactForm.mobilephone" @on-change="fieldChange('mobilep')"></i-input>-->
                                                 <i-input v-model="input_phone"></i-input>
                                             </i-col>
                                             <i-col span=2>
@@ -184,42 +181,12 @@
             }
         },
         methods: {
-            //I can pass the $event parameter inline on the element and that will give me the DOM event
-            //I only need to do this if I choose to pass another param. If I pass no params inline, 
-            //the js engine assumes a named param on the function definition is the event.
-
-            //There is SURELY a more sophistocated way to handle this kind of thing. Probably a state
-            //mutex pattern. But I'm pressed for time, so no fancy code right now.
-            fieldChange(fieldName) { 
-                switch(fieldName)
-                {
-                    case 'fname':
-                        globalState.user.firstname = this.contactForm.firstname;
-                        break;
-                    case 'lname':
-                        globalState.user.lastname = this.contactForm.lastname;
-                        break;
-                    case 'email':
-                        globalState.user.email = this.contactForm.email;
-                        break;
-                    case 'dayp':
-                        globalState.user.dayphone = this.contactForm.dayphone;
-                        break;
-                    case 'mobilep':
-                        globalState.user.mobilephone = this.contactForm.mobilephone;
-                        break;
-                    case 'chkTest':
-                        console.log('got here');
-                        break;
-                    default: 
-                        break;
-                }
-            },
             handleGotoCompany () {
 
                 this.$refs['contactForm'].validate((valid) => {
                     if (valid)
                     {
+                        this.$store.commit('SET_PAGE_COMPLETE', 'contact')
                         this.$router.push({ name: "company" });        
                     }
                     else

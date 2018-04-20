@@ -46,61 +46,14 @@
                                             Read
                                         </Button>
                                     </p>
-                                </Card>
-                                <!--<Collapse>
-                                    <Panel name="pnl_gdpr">
-                                        <b>General Data Protection Regulation (EU)</b>
-                                        <p slot="content">
-                                            This document describes how Symphony Communications, LLC conforms to the requirements of the EU GDPR.
-                                            <br/><br/>
-                                            <Button type="primary">
-                                                <Icon type="eye"></Icon>
-                                                Read
-                                            </Button>
-                                            <Button type="primary">
-                                                <Icon type="android-download"></Icon>
-                                                Download
-                                            </Button>
-                                        </p>
-                                    </Panel>
-                                    <Panel name="pnl_privacy">
-                                        <b>Privacy Policy - Symphony Communications</b>
-                                        <p slot="content">
-                                            Our standard privacy policy regarding any personal information you submit on any of our public facing pages. 
-                                            <br/><br/>
-                                            <Button type="primary">
-                                                <Icon type="eye"></Icon>
-                                                Read
-                                            </Button>
-                                            <Button type="primary">
-                                                <Icon type="android-download"></Icon>
-                                                Download
-                                            </Button>
-                                        </p>
-                                    </Panel>
-                                    <Panel name="pnl_msa">
-                                        <b>End User License Agreement</b>
-                                        <p slot="content">
-                                            Terms and conditions for using the Symphony platform for communication. You are required to agree to these conditions before continuing. 
-                                            <br/><br/>
-                                            <Button type="primary">
-                                                <Icon type="eye"></Icon>
-                                                Read
-                                            </Button>
-                                            <Button type="primary">
-                                                <Icon type="android-download"></Icon>
-                                                Download
-                                            </Button>
-                                        </p>
-                                    </Panel>
-                                </Collapse>-->
+                                </Card>                                
                             </i-col>
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=20 :sm=20 :md=20 :lg=14>
                                 <Form ref="legalForm" :model="legalForm" :rules="validation_rules">
-                                    <FormItem prop="terms_conditions" :required=true>
-                                        <Checkbox v-model="legalForm.terms_conditions" @on-change="fieldChange('terms_conditions')" >
+                                    <FormItem prop="terms_accepted" :required=true>
+                                        <Checkbox v-model="input_terms_accepted">
                                             <span>I have read and agree to the Terms and Conditions</span>
                                         </Checkbox>
                                     </FormItem>
@@ -123,8 +76,6 @@
     </div>  
 </template>
 <script>
-    import globalState from '../libs/interviewState.js';
-
     export default {
         data() {
             const validateTandC = (rule, value, callback) => {
@@ -143,10 +94,10 @@
             return {
                 page_title: 'Symphony - Terms and Conditions',
                 legalForm: {
-                    terms_conditions: false
+                    terms_accepted: false
                 },
                 validation_rules: {
-                    terms_conditions: [
+                    terms_accepted: [
                         //{ required: true, type: "boolean",  message: 'Please check that you agree to the terms specified in the EULA', trigger: 'change'}
                         { validator: validateTandC, trigger: 'change' }
                     ]
@@ -164,26 +115,25 @@
         },
         mounted: function() {
 
-            if (globalState.legal)
-            {
-                this.legalForm.terms_conditions = globalState.legal.terms_conditions;
+            this.legalForm.terms_accepted = this.$store.state.legal.terms_accepted
+        },
+        computed: {
+            input_terms_accepted: {
+                get () {
+                    return this.$store.state.legal.terms_accepted
+                },
+                set (value) {
+                    this.legalForm.terms_accepted = value
+                    this.$store.commit('SET_TANDC', value)
+                }
             }
         },
         methods: {
-            fieldChange(fieldName) { 
-                switch(fieldName)
-                {
-                    case 'terms':
-                        globalState.legal.terms_conditions = this.legalForm.terms_conditions;
-                        break;
-                    default: 
-                        break;
-                }
-            },
             handleGotoBilling () {
                 this.$refs['legalForm'].validate((valid) => {
                     if (valid)
                     {
+                        this.$store.commit('SET_PAGE_COMPLETE', 'legal')
                         this.$router.push({name: "billing"});
                     }
                     else

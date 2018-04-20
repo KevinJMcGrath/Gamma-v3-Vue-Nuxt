@@ -35,20 +35,10 @@
                         </Row>
 
                         <Form ref="serviceForm" :model="serviceForm" :label-width="150" :rules="validation_rules">
-                        <!--<Row type="flex" justify="center" class="standardRow">
-                            <i-col :xs=20 :sm=20 :md=16 :lg=14>                                
-                                <<FormItem label="Requested Domain">
-                                    <i-input v-model="serviceForm.subdomain" @on-change="fieldChange('subdomain')">
-                                        <span slot="prepend">https://</span>
-                                        <span slot="append">.symphony.com</span>
-                                    </i-input>
-                                </FormItem>
-                            </i-col>
-                        </Row>-->
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=20 :sm=20 :md=12 :lg=10> 
                                 <FormItem label="Initial Users" prop="seats" :show-message=true>
-                                    <InputNumber :min="10" :step="1" v-model="serviceForm.seats" @on-change="fieldChange('seats')"></InputNumber>
+                                    <InputNumber :min="10" :step="1" v-model="input_seats"></InputNumber>
                                     <a href="#" @click="pricing_window = true" style="margin-left: 10px;">Pricing</a>
                                     <Modal v-model="pricing_window" title="Pricing" @on-ok="modal_ok" ok-text="Ok" cancel-text="Cancel">
                                         <p>
@@ -59,10 +49,10 @@
                                         </p>
                                     </Modal>
                                 </FormItem>
-                                <FormItem label="Vanity Name" prop="directoryname">                                    
+                                <FormItem label="Vanity Name" prop="vanity_name">                                    
                                     <Row :gutter=8>
                                         <i-col span=20>
-                                            <i-input v-model="serviceForm.directoryname" @on-change="fieldChange('directoryname')"></i-input>      
+                                            <i-input v-model="input_vanity_name"></i-input>      
                                         </i-col>
                                         <i-col span=2>
                                             <Tooltip placement="right">
@@ -75,19 +65,10 @@
                                         </i-col>
                                     </Row>
                                 </FormItem>
-                                <!--
-                                <FormItem label="Support Tier">
-                                    <Select v-model="serviceForm.support_tier" placeholder="Select" @on-change="fieldChange('support_tier')">
-                                        <Option value="bronze">Self-Service (Free)</Option>
-                                        <Option value="silver">Silver ($500/year)</Option>
-                                        <Option value="gold">Gold ($1000/year)</Option>
-                                        <Option value="platinum">Platinum ($2000/year)</Option>
-                                    </Select>
-                                </FormItem>-->
-                                <FormItem label="Promo Code" prop="promocode">                                    
+                                <FormItem label="Promo Code" prop="promo_code">                                    
                                     <Row :gutter=8>
                                         <i-col span=20>
-                                            <i-input v-model="serviceForm.promocode" @on-change="fieldChange('promocode')"></i-input>   
+                                            <i-input v-model="input_promo_code"></i-input>   
                                         </i-col>
                                         <i-col span=2>
                                             <Tooltip placement="right">
@@ -120,26 +101,22 @@
     </div>  
 </template>
 <script>
-    import globalState from '../libs/interviewState.js';
-
     export default {
         data() {
             return {
                 page_title: 'Symphony - Service',
                 pricing_window: false,
                 serviceForm: {
-                    subdomain: '',
                     seats: 10,
-                    directoryname: '',
-                    support_tier: '',
-                    promocode: ''
+                    vanity_name: '',
+                    promo_code: ''
                 },
                 validation_rules: {
                     seats: [
                         //For some reason, I needed to specify the type for this rule to work consistently
                         { required: true, type: 'number', message: 'Please enter a non-zero number of seats.', trigger: 'change' }
                     ],
-                    directoryname: [
+                    vanity_name: [
                         { required: true, message: 'Please include a "friendly" name for your company.', trigger: 'blur' }
                     ]
                 }
@@ -155,44 +132,45 @@
             }
         },
         mounted: function() {
-
-            if (globalState.service)
-            {
-                this.serviceForm.subdomain = globalState.service.subdomain;
-                this.serviceForm.seats = globalState.service.seats;
-                this.serviceForm.directoryname = globalState.service.directoryname;
-                this.serviceForm.support_tier = globalState.service.support_tier;
-                this.serviceForm.promocode = globalState.service.promocode;
+            this.serviceForm.seats = this.$store.state.service.seats
+            this.serviceForm.vanity_name = this.$store.state.service.vanity_name
+            this.serviceForm.promo_code = this.$store.state.service.promo_code
+        },
+        computed: {
+            input_seats: {
+                get () {
+                    return this.$store.state.service.seats
+                },
+                set (value) {
+                    this.serviceForm.seats = value;
+                    this.$store.commit('SET_SEATS', value)
+                }
+            },
+            input_vanity_name: {
+                get () {
+                    return this.$store.state.service.vanity_name
+                },
+                set (value) {
+                    this.serviceForm.vanity_name = value;
+                    this.$store.commit('SET_VANITYNAME', value)
+                }
+            },
+            input_promo_code: {
+                get () {
+                    return this.$store.state.service.promo_code
+                },
+                set (value) {
+                    this.serviceForm.promo_code = value;
+                    this.$store.commit('SET_PROMOCODE', value)
+                }
             }
         },
         methods: {
-            fieldChange(fieldName) { 
-                switch(fieldName)
-                {
-                    case 'subdomain':
-                        globalState.service.subdomain = this.serviceForm.subdomain;
-                        break;
-                    case 'seats':
-                        console.log('Seats: ' + this.serviceForm.seats);
-                        globalState.service.seats = this.serviceForm.seats;
-                        break;
-                    case 'directoryname':
-                        globalState.service.directoryname = this.serviceForm.directoryname;
-                        break;
-                    case 'support_tier':
-                        globalState.service.support_tier = this.serviceForm.support_tier;
-                        break;
-                    case 'promocode':
-                        globalState.service.promocode = this.serviceForm.promocode;
-                        break;
-                    default: 
-                        break;
-                }
-            },
             handleGotoLegal () {
                 this.$refs['serviceForm'].validate((valid) => {
                     if (valid)
                     {
+                        this.$store.commit('SET_PAGE_COMPLETE', 'service')
                         this.$router.push({name: "legal"});
                     }
                     else
@@ -200,8 +178,6 @@
                         this.$Message.error();
                     }
                 })
-                
-                
             },
             handleGotoCompany() {
                 this.$router.push({name: "company"})

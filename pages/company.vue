@@ -39,7 +39,7 @@
                                     <FormItem label="Company (Legal) Name" prop="companyname">                                        
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <i-input v-model="companyForm.companyname" @on-change="fieldChange('company')"></i-input>       
+                                                <i-input v-model="input_company"></i-input>       
                                             </i-col>
                                             <i-col span=2>
                                                 <Tooltip placement="right">
@@ -55,7 +55,7 @@
                                     <FormItem label="Industry" prop="industry">
                                         <Row :gutter=8>
                                             <i-col span=20>
-                                                <Select v-model="companyForm.industry" placeholder="Select" @on-change="fieldChange('industry')">
+                                                <Select v-model="input_industry" placeholder="Select">
                                                     <Option value="Agriculture-Mining">Agriculture &amp; Mining</Option>
                                                     <Option value="Communications-Media-IT">Communications, Media, IT</Option>
                                                     <Option value="Consulting-Services">Consulting Services</Option>
@@ -85,14 +85,6 @@
                                             <i-col span=2></i-col>
                                         </Row>
                                     </FormItem>
-                                    <!--Striking Region - 3/20/2018-->
-                                    <!--<FormItem label="Region">
-                                        <Select v-model="companyForm.region" placeholder="Select" @on-change="fieldChange('region')">
-                                            <Option value="AMER">Americas</Option>
-                                            <Option value="EMEA">EMEA</Option>
-                                            <Option value="APAC">APAC</Option>
-                                        </Select>
-                                    </FormItem>-->
                                 </Form>
                             </i-col>
                         </Row>
@@ -112,7 +104,6 @@
     </div>  
 </template>
 <script>
-    import globalState from '../libs/interviewState.js';
 
     export default {
         data() {
@@ -120,8 +111,7 @@
                 page_title: 'Symphony - Company',
                 companyForm: {
                     companyname: '',
-                    industry: '',
-                    region: ''
+                    industry: ''
                 },
                 validation_rules: {
                     companyname: [
@@ -145,34 +135,36 @@
         },
         mounted: function() {
 
-            if (globalState.company)
-            {
-                this.companyForm.companyname = globalState.company.name;
-                this.companyForm.industry = globalState.company.industry;
-                this.companyForm.region = globalState.company.region;
+            this.companyForm.companyname = this.$store.state.company.name
+            this.companyForm.industry = this.$store.state.company.industry
+            
+        },
+        computed: {
+            input_company: {
+                get () {
+                    return this.$store.state.company.name
+                },
+                set (value) {
+                    this.companyForm.companyname = value
+                    this.$store.commit('SET_COMPANY', value)
+                }
+            },
+            input_industry: {
+                get () {
+                    return this.$store.state.company.industry
+                },
+                set (value) {
+                    this.companyForm.industry = value
+                    this.$store.commit('SET_INDUSTRY', value)
+                }
             }
         },
         methods: {
-            fieldChange(fieldName) { 
-                switch(fieldName)
-                {
-                    case 'company':
-                        globalState.company.name = this.companyForm.companyname;
-                        break;
-                    case 'industry':
-                        globalState.company.industry = this.companyForm.industry;
-                        break;
-                    case 'region':
-                        globalState.company.region = 'AMER';
-                        break;
-                    default: 
-                        break;
-                }
-            },
             handleGotoService () {
                 this.$refs['companyForm'].validate((valid) => {
                     if (valid) 
                     {
+                        this.$store.commit('SET_PAGE_COMPLETE', 'company')
                         this.$router.push({name: "service"});        
                     }
                     else

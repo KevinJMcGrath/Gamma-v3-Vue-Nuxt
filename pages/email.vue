@@ -112,13 +112,33 @@
                         }.bind(this)).catch(function (error) {
                             console.error(error);
 
+                            let d = 'There was a problem completing your verification request. '
+
+                            if (error.response.data.errorDetail)
+                            {
+                                switch (error.response.data.errorDetail) {
+                                    case '1':
+                                        d += 'Your email was previously submitted and blocked as freemail.'
+                                        break
+                                    case '2':
+                                        d += 'Your email was previously submitted and blocked - your company is already on Symphony.'
+                                        break
+                                    case '3':
+                                        d += 'An account with this email address already exists.'
+                                        break
+                                    default:
+                                        break
+                                }
+                            }
+                            
+
                             this.$Notice.error({
                                 title: 'Error Verifying Email Address',
-                                desc: 'There was a problem completing your verification request.'
+                                desc: d,
+                                duration: 0
 
                                 /*************
-                                    TODO: Explain why this didn't work to the user
-                                    then, test email submission fo realz
+                                    TODO: test email submission fo realz
                                     then, wire up main flow
                                     then, figure out how to publish to GCP
 

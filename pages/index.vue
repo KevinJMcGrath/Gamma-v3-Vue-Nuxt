@@ -66,13 +66,6 @@
         },
         methods: {
             handleStartFlow () {
-                /*
-                axios.post('/api/verify', { data1: 'bob', data2: 'alice' }).then(function(response) {
-                    console.log('API Response: ')
-                    console.log(response)
-                }).catch(function (error) {
-                    console.error(error);
-                })*/
 
                 this.$router.push({ name: "contact", query: { sseid: '1234567890', email: 'kevin.mcgrath@symphony.com' } }); 
             }

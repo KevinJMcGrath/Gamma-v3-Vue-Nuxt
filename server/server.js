@@ -11,11 +11,7 @@ app.use(bodyParser.json())
 // instead of specifying them manually
 app.use('/api', api)
 
-const isProd = process.env.NODE_ENV === 'production'
 const config = require('../nuxt.config.js')
-
-console.log('isProd: ' + isProd)
-console.log('config.dev: ' + config.dev)
 
 const nuxt = new Nuxt(config)
 

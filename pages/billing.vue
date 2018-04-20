@@ -35,16 +35,6 @@
                         </Row>
 
                         <Form ref="billingForm" :model="billingForm" :label-width="150" :rules="validation_rules">
-                        <!--<Row type="flex" justify="center" class="standardRow">
-                            <i-col :xs=20 :sm=20 :md=12 :lg=10>                                
-                                <FormItem label="Payment Type" >
-                                    <Select v-model="billingForm.type" placeholder="Select" @on-change="fieldChange('type')">
-                                        <Option value="card">Credit Card</Option>
-                                        <Option value="ach">Company ACH Transfer</Option>
-                                    </Select>
-                                </FormItem>
-                            </i-col>
-                        </Row>-->
                         <Row type="flex" justify="center"  class="standardRow">
                             <i-col :xs=20 :sm=20 :md=18 :lg=14>
                                 <Card>
@@ -61,24 +51,24 @@
                                         <Row>
                                             <i-col span=24>
                                                 <FormItem :label-width=10 prop="address1">
-                                                    <i-input v-model="billingForm.address1" @on-change="fieldChange('address1')" placeholder="Street Address"></i-input>
+                                                    <i-input v-model="input_add1" placeholder="Street Address"></i-input>
                                                 </FormItem>
                                             </i-col>
                                         </Row>
                                         <Row>
                                             <i-col span=10>
                                                 <FormItem :label-width=10 prop="city">
-                                                    <i-input v-model="billingForm.city" @on-change="fieldChange('city')" placeholder="City"></i-input>
+                                                    <i-input v-model="input_city" placeholder="City"></i-input>
                                                 </FormItem>
                                             </i-col>
                                             <i-col span=6 >
                                                 <FormItem :label-width=10 prop="state">
-                                                    <i-input v-model="billingForm.state" @on-change="fieldChange('state')" placeholder="State"></i-input>
+                                                    <i-input v-model="input_state" placeholder="State"></i-input>
                                                 </FormItem>
                                             </i-col>
                                             <i-col span=8>
-                                                <FormItem :label-width=10 prop="zip">
-                                                    <i-input v-model="billingForm.zip" @on-change="fieldChange('zip')" placeholder="ZIP"></i-input>
+                                                <FormItem :label-width=10 prop="zip_code">
+                                                    <i-input v-model="input_zip" placeholder="ZIP"></i-input>
                                                 </FormItem>
                                             </i-col>
                                         </Row>
@@ -113,8 +103,6 @@
 </template>
    
 <script>
-    import globalState from '../libs/interviewState.js';
-
     var stripe = Stripe('pk_test_gUJYd9BdGY6XdYL9RltHkmRe');
     var stripeElement;
 
@@ -123,13 +111,11 @@
             return {
                 page_title: 'Symphony - Billing Details',
                 billingForm: {
-                    type: '',
                     address1: '',
                     address2: '',
                     city: '',
                     state: '',
-                    zip: '',
-                    country: '',
+                    zip_code: '',
                     stripeError: ''
                 },
                 validation_rules: {
@@ -142,7 +128,7 @@
                     state: [
                         { required: true, message: 'Please provide your state or province.', trigger: 'blur' }
                     ],
-                    zip: [
+                    zip_code: [
                         { required: true, message: 'Please provide your zip or postal code.', trigger: 'blur' }
                     ]
                 }
@@ -161,46 +147,68 @@
 
             if (globalState.billing)
             {
-                this.billingForm.type = globalState.billing.type;
-                this.billingForm.address1 = globalState.billing.address1;
-                this.billingForm.address2 = globalState.billing.address2;
-                this.billingForm.city = globalState.billing.city;
-                this.billingForm.state = globalState.billing.state;
-                this.billingForm.zip = globalState.billing.zip;
-                this.billingForm.country = globalState.billing.country;
+                this.billingForm.address1 = this.$store.state.billing.address1
+                this.billingForm.address2 = this.$store.state.billing.address2
+                this.billingForm.city = this.$store.state.billing.city
+                this.billingForm.state = this.$store.state.billing.billing_state
+                this.billingForm.zip = this.$store.state.billing.zip_code
             }
 
             stripeElement = MountStripeElements();
         },
-        methods: {
-            fieldChange(fieldName) { 
-                switch(fieldName)
+        computed: {
+            input_add1: {
+                get () {
+                    return this.$store.state.billing.address1
+                },
+                set (value)
                 {
-                    case 'type':
-                        globalState.billing.type = this.billingForm.type;
-                        break;
-                    case 'address1':
-                        globalState.billing.address1 = this.billingForm.address1;
-                        break;
-                    case 'address2':
-                        globalState.billing.address2 = this.billingForm.address2;
-                        break;
-                    case 'city':
-                        globalState.billing.city = this.billingForm.city;
-                        break;
-                    case 'state':
-                        globalState.billing.state = this.billingForm.state;
-                        break;
-                    case 'zip':
-                        globalState.billing.zip = this.billingForm.zip;
-                        break;
-                    case 'country':
-                        globalState.billing.country = this.billingForm.country;
-                        break;
-                    default: 
-                        break;
+                    this.billingForm.address1 = value
+                    this.$store.commit('SET_ADD1', value)
                 }
             },
+            input_add2: {
+                get () {
+                    return this.$store.state.billing.address2
+                },
+                set (value)
+                {
+                    this.billingForm.address2 = value
+                    this.$store.commit('SET_ADD2', value)
+                }
+            },
+            input_city: {
+                get () {
+                    return this.$store.state.billing.city
+                },
+                set (value)
+                {
+                    this.billingForm.city = value
+                    this.$store.commit('SET_CITY', value)
+                }
+            },
+            input_state: {
+                get () {
+                    return this.$store.state.billing.billing_state
+                },
+                set (value)
+                {
+                    this.billingForm.state = value
+                    this.$store.commit('SET_BILLING_STATE', value)
+                }
+            },
+            input_zip: {
+                get () {
+                    return this.$store.state.billing.zip_code
+                },
+                set (value)
+                {
+                    this.billingForm.zip_code = value
+                    this.$store.commit('SET_ZIP', value)
+                }
+            }
+        },
+        methods: {            
             handleGotoSummary () {
                 this.$refs['billingForm'].validate((valid) => {
                     this.billingForm.stripeError = '';
@@ -209,11 +217,10 @@
                         stripe.createToken(stripeElement).then(function(result) {
                             if (result.token)
                             {
-                                
+                                //globalState.billing.stripe_token = result.token;
+                                this.$store.commit('SET_STRIPE_TOKEN', result.token)
 
-                                console.log(result.token);
-                                globalState.billing.stripe_token = result.token;
-
+                                this.$store.commit('SET_PAGE_COMPLETE', 'billing')
                                 this.$router.push({name: "summary"});  
                             }
                             else if (result.error) {

@@ -1,4 +1,5 @@
 module.exports = {
+  dev: (process.env.NODE_ENV !== 'production'),
   head: {
     title: '{{title}}',
     meta: [
@@ -21,14 +22,6 @@ module.exports = {
   ],
 
   loading: { color: '#3B8070' },
-
-  /*router: {
-    middleware: 'email-verify'
-  },
-
-  serverMiddleware: [ 
-    '~/middleware/serverMid'
-  ],*/
 
   build: {
 
@@ -72,6 +65,4 @@ module.exports = {
   plugins: [
     { src: '~/plugins/iview.js', ssr: true}
   ]
-
-  ,dev: (process.env.NODE_ENV !== 'production')
 }
