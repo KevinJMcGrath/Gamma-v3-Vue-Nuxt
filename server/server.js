@@ -34,7 +34,16 @@ if (config.dev) {
 	})
 }
 
+// Winston should either go here
+
+
 app.use(nuxt.render)
+
+
+//Or here. nuxt.render is technically middleware, but it's not using the express server
+
+
+
 app.listen(8081)
 
 console.log('Custom Server is listening on http://localhost:8081')
