@@ -1,5 +1,8 @@
 module.exports = {
   dev: (process.env.NODE_ENV !== 'production'),
+  router: {
+    mode: 'hash'
+  },
   head: {
     title: '{{title}}',
     meta: [

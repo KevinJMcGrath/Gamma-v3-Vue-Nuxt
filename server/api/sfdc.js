@@ -10,6 +10,8 @@ const baseURL = 'https://dev-symphonyinc.cs4.force.com/services/apexrest/symphon
 
 router.post('/test', function(req, res, next) {
 	console.log(req.body.email_address)
+
+	res.json(req.body.email_address)
 })
 
 router.post('/verify', function(req, res, next) {
