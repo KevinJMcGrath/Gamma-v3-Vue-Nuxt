@@ -1,3 +1,14 @@
+// Adding automatic tracing through the TraceAgent
+if (process.env.NODE_ENV === 'production') {
+	require('@google-cloud/trace-agent').start()
+}
+else {
+	require('@google-cloud/trace-agent').start({
+		projectId: 'symphony-gamma-poc',
+		keyFilename: './credentials/symphony-gamma-poc-493624b6cca1.json'
+	})
+}
+
 const { Nuxt, Builder } = require('nuxt')
 const bodyParser = require('body-parser')
 const express = require('express')
