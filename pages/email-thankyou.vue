@@ -52,7 +52,6 @@
     </div>
 </template>
 <script>
-    import globalState from '../libs/interviewState.js';
 
     export default {
         data() {            
@@ -72,10 +71,7 @@
             }
         },
         mounted: function() {
-            if (globalState.user)
-            {
-                this.emailAddress = globalState.user.email;
-            }
+                this.emailAddress = this.$store.state.email.email_address
         },
         methods: {
             handleResendEmail() {
