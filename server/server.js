@@ -63,7 +63,7 @@ app.use(nuxt.render)
 
 //Or here. nuxt.render is technically middleware, but it's not using the express server
 
-const appPort = process.env.PORT || 8080
+const appPort = 8080
 
 console.log(`app.yaml reports listening port: ${process.env.PORT}`)
 console.log(`Setting server lisetning port to: ${appPort}`)

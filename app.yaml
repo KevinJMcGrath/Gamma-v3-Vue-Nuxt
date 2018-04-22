@@ -13,4 +13,3 @@ resources:
 env_variables:
   NODE_ENV: "production"
   SFDC_API_KEY: "TBD"
-  PORT: 8080
