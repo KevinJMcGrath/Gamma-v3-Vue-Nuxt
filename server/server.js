@@ -24,6 +24,6 @@ if (config.dev) {
 }
 
 app.use(nuxt.render)
-app.listen(3000)
+app.listen(8081)
 
-console.log('Custom Server is listening on http://localhost:3000')
+console.log('Custom Server is listening on http://localhost:8081')

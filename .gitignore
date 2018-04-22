@@ -10,6 +10,9 @@ npm-debug.log
 # Nuxt generate
 dist
 
+# Archived Files
+archive
+
 # Secrets
 secrets.json
 .env
