@@ -1,8 +1,8 @@
 {
   "name": "gamma-nuxt",
-  "version": "1.0.0",
-  "description": "Nuxt.js project",
-  "author": "antiproton85 <kevinmcgr@gmail.com>",
+  "version": "0.5.0",
+  "description": "Symphony Self Service Ordering",
+  "author": "Kevin McGrath <kevin.mcgrath@symphony.com>",
   "private": true,
   "scripts": {
     "dev": "node ./server/server.js",

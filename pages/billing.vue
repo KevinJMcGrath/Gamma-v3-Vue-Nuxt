@@ -145,14 +145,11 @@
         },
         mounted: function() {
 
-            if (globalState.billing)
-            {
-                this.billingForm.address1 = this.$store.state.billing.address1
-                this.billingForm.address2 = this.$store.state.billing.address2
-                this.billingForm.city = this.$store.state.billing.city
-                this.billingForm.state = this.$store.state.billing.billing_state
-                this.billingForm.zip = this.$store.state.billing.zip_code
-            }
+            this.billingForm.address1 = this.$store.state.billing.address1
+            this.billingForm.address2 = this.$store.state.billing.address2
+            this.billingForm.city = this.$store.state.billing.city
+            this.billingForm.state = this.$store.state.billing.billing_state
+            this.billingForm.zip_code = this.$store.state.billing.zip_code
 
             stripeElement = MountStripeElements();
         },

@@ -61,9 +61,52 @@ router.post('/verify', function(req, res, next) {
 	})
 })
 
+router.post('/purchase-test', function(req, res, next) {
+	let ep = 'http://requestbin.fullcontact.com/1ebcgxn1'
+
+	let payload = req.body
+	let config = {}
+
+	axios.post(ep, payload, config)
+	.then((response) => {
+		console.log('Success (API Server)')
+		console.log('Response Code: ' + response.status)
+
+		res.status(204)
+	})
+	.catch((error) => {
+		console.error('Failed to POST')
+		console.error(error)
+
+		if (error.response)
+		{
+			console.error('Response Code: ' + error.response.status)
+			console.error('Response Text: ' + error.response.statusText)
+			console.error('Response Body: ' + error.response.data)
+			console.error('Response Headers: ' + error.response.headers)
+
+			res.json( { success: false, message: 'HTTP Error' })
+		}
+		else if (error.request)
+		{
+			// Request was made but no response was received
+			console.error(error.request)
+
+			res.json( { success: false, message: 'System Error' })
+		}
+		else
+		{
+			console.error('Unknown Error: ' + error.message)
+
+			res.json( { success: false, message: 'Unknown Error' })
+		}
+	})
+}) 
+
 
 router.post('/purchase-submit', function(req, res, next) {
 	
+	const payload = req.body
 	const config = {
 		baseURL: baseURL,
 		headers: {
@@ -71,7 +114,7 @@ router.post('/purchase-submit', function(req, res, next) {
 		}
 	}
 
-	axios.post('/email-verification', payload, config)
+	axios.post('/selfservice-submit', payload, config)
 	.then((response) => {
 		console.log('Success!')
 		console.log('Response Code: ' + response.status)
@@ -95,7 +138,7 @@ router.post('/purchase-submit', function(req, res, next) {
 		else if (error.request)
 		{
 			// Request was made but no response was received
-			console.error(error.request)
+			console.error(error.message)
 
 			res.json( { success: false, message: 'System Error' })
 		}

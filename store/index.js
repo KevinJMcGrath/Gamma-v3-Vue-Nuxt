@@ -17,7 +17,7 @@ const store = () => new Vuex.Store({
 		},
 		email: {
 			email_address: 'stanz@ghostbusters.net',
-			is_verified: 'false'
+			is_verified: false
 		},
 		user: {
 			firstname: 'Kevin',
@@ -37,7 +37,7 @@ const store = () => new Vuex.Store({
 			terms_accepted: true
 		},
 		billing: {
-			type: 'card',
+			payment_type: 'card',
 			address1: '14 North Moore Street',
 			address2: 'Tribeca',
 			city: 'New York',
@@ -127,6 +127,26 @@ const store = () => new Vuex.Store({
 		// 
 		getPageState: (state) => (page_name) => {
 			return state.page_state.find(page => page.name === page_name)
+		},
+		getEmailDomain: (state) => {
+
+			if (state.email.email_address && state.email.email_address.indexOf('@') !== -1) {
+				let index1 = state.email.email_address.indexOf('@') + 1
+				let sub1 = state.email.email_address.substring(index1)
+
+				if (sub1 && sub1.indexOf('.')) {
+					let index2 = sub1.indexOf('.')
+
+					return sub1.substring(0, index2)
+				} 
+				else {
+					return ''
+				}
+			}
+			else {
+				return ''
+			}
+			
 		}
 	},	
 	actions: {

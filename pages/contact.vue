@@ -131,7 +131,7 @@
                 if (query.sseid && query.email)
                 {
                     store.commit('SET_GUID', query.sseid)
-                    store.commit('SET_EMAIL', query.email)
+                    store.commit('SET_EMAIL', query.email.replace(' ', '+'))
                 }
                 else
                 {
