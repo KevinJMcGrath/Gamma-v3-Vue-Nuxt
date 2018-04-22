@@ -66,11 +66,8 @@ app.use(nuxt.render)
 const appPort = 8080
 
 console.log(`app.yaml reports listening port: ${process.env.PORT}`)
+
+
+app.listen(appPort)
+
 console.log(`Setting server lisetning port to: ${appPort}`)
-
-app.listen(appPort, () => {
-    const port = server.address().port;
-    console.log(`App listening on port ${port}`);
-  })
-
-//console.log('Custom Server is listening on http://localhost:8081')
