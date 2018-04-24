@@ -136,7 +136,7 @@
                 else
                 {
                     //I might need to return an error here instead.
-                    redirect('email')
+                    redirect('/email')
                 }
             }
             
