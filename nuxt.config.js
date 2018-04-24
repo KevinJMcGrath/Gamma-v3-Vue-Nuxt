@@ -1,5 +1,6 @@
 module.exports = {
   dev: (process.env.NODE_ENV !== 'production'),
+  srcDir: 'app/',
   head: {
     title: '{{title}}',
     meta: [
