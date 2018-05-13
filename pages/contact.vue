@@ -5,13 +5,13 @@
             <Layout class="layoutClass">
                 <Sider hide-trigger class="sidebarClass">
                     <Steps :current="0" direction="vertical">
-                        <Step title="You" content="Information about the first user."></Step>
-                        <Step title="Your Company" content="Some details about your organization."></Step>
-                        <Step title="Symphony Service" content="How should the service be configured?"></Step>
-                        <Step title="Legalese" content="Our terms and conditions."></Step>
-                        <Step title="Billing" content="Credit card and billing information."></Step>
-                        <Step title="Purchase Summary" content="Subscription summary and confirmation."></Step>
-                        <Step title="Finished!" content=""></Step>
+                        <Step title="Profile" content="Your contact information"></Step>
+                        <Step title="Organization" content="Some details about your company"></Step>
+                        <Step title="Settings" content="Choose the right Symphony settings for your team"></Step>
+                        <Step title="Terms of Service" content="Symphony terms and conditions"></Step>
+                        <Step title="Billing" content="Enter your payment information"></Step>
+                        <Step title="Confirmation" content="Review and confirm your information"></Step>
+                        <Step title="Get Started!" content=""></Step>
                     </Steps>
                 </Sider>
                 <Content class="contentClass">
@@ -23,13 +23,15 @@
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=18 :md=10 :lg=8> <!--span=6-->
-                                <p class="p2">Tell Us About You...</p>
+                                <p class="p2">Profile</p>
                             </i-col>
                         </Row>                        
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=20 :md=18 :lg=16><!--span=16-->
                                 <p class="p4">
-                                    As the very first user in your new Symphony instance, we need some information to configure your user account and establish a point of contact for initial setup details and service communications (e.g. upgrade announcements, service interruptions, etc.)
+                                    Congratulations! You're the first person on your Symphony team, which makes you the team admin. As team admin, you will help
+                                    tailor Symphony to your organization's secure collaboration needs.<br/>
+                                    First, we need some information to set up your profile. 
                                 </p>
                             </i-col>
                         </Row>

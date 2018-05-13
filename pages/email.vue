@@ -11,13 +11,13 @@
                     </Row>
                     <Row type="flex" justify="center" class="standardRow">
                         <i-col :xs=24 :sm=18 :md=10 :lg=8>
-                            <p class="p1">Email Verification</p>
+                            <p class="p1">Verify your Email</p>
                         </i-col>
                     </Row>
                     <Row type="flex" justify="center" class="standardRow">
                         <i-col :xs=18 :sm=16 :md=14 :lg=10>
                             <p class="p3">
-                                First, let's verify your email address. You will receive a verification email shortly that will include a link to continue your signup interview. 
+                                Enter your email to receive a verification code & continue your sign up. 
                             </p>
                         </i-col>
                     </Row>
@@ -25,20 +25,20 @@
                         <Row :gutter=16 type="flex" justify="center" class="standardRow">
                             <i-col span=8>
                                 <FormItem prop="email">
-                                    <i-input v-model="emailForm.email" placeholder="Email Address"></i-input>
+                                    <i-input v-model="emailForm.email" placeholder="Enter your business email"></i-input>
                                 </FormItem>                                 
                             </i-col>
                         </Row>
                     </Form>
                     <Row type="flex" justify="center" class="standardRow">
                         <i-col span=2>
-                            <Button type="primary" size="large" @click="handleValidateEmail('emailForm')">Continue</Button>
+                            <Button type="primary" size="large" @click="handleValidateEmail('emailForm')">Send Verification Code</Button>
                         </i-col>
                     </Row>
                     <Row type="flex" justify="center" class="standardRow">
                         <i-col :xs=18 :sm=16 :md=14 :lg=10>
                             <p class="p4">
-                                <b>Please Note</b>: Symphony is not accepting signups from "free mail" addresses at this time. This includes GMail, Yahoo, Outlook, etc.
+                                Symphony is not accepting sign ups from non-business emails at this time, including GMail, Yahoo and Outlook.
                             </p>
                         </i-col>
                     </Row>

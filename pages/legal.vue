@@ -5,13 +5,13 @@
             <Layout class="layoutClassStationary">
                 <Sider hide-trigger class="sidebarClass">
                     <Steps :current="3" direction="vertical">
-                        <Step title="You" content="Information about the first user."></Step>
-                        <Step title="Your Company" content="Some details about your organization."></Step>
-                        <Step title="Symphony Service" content="How should the service be configured?"></Step>
-                        <Step title="Legalese" content="Our terms and conditions."></Step>
-                        <Step title="Billing" content="Credit card and billing information."></Step>
-                        <Step title="Purchase Summary" content="Subscription summary and confirmation."></Step>
-                        <Step title="Finished!" content=""></Step>
+                        <Step title="Profile" content="Your contact information"></Step>
+                        <Step title="Organization" content="Some details about your company"></Step>
+                        <Step title="Settings" content="Choose the right Symphony settings for your team"></Step>
+                        <Step title="Terms of Service" content="Symphony terms and conditions"></Step>
+                        <Step title="Billing" content="Enter your payment information"></Step>
+                        <Step title="Confirmation" content="Review and confirm your information"></Step>
+                        <Step title="Get Started!" content=""></Step>
                     </Steps>
                 </Sider>
                 <Content class="contentClass">
@@ -23,13 +23,14 @@
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=24 :md=24 :lg=24>
-                                <p class="p2">Our Terms of Service...</p>
+                                <p class="p2">Terms of Service</p>
                             </i-col>
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=20 :md=18 :lg=16>
                                 <p  class="p4">
-                                    Listed below is a collection of our agreements and policies. Each item will provide you with an option to download the document to read at your leisure. At minimum, you must agree to our terms and conditions listed in the End User License Agreement (EULA) in order to proceed with your order. 
+                                    Please read through Symphony's agreements and policies. You must agree to our terms & conditions to continue with your setup.<br/>
+                                    If you need additional documentation, please contact <a href="mailto:legal@symphony.com">legal@symphony.com</a>
                                 </p>
                             </i-col>
                         </Row>

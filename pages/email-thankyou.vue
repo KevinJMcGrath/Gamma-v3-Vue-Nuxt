@@ -17,9 +17,9 @@
                     <Row type="flex" justify="center" class="standardRow">
                         <i-col :xs=18 :sm=16 :md=14 :lg=10>
                             <p class="p3">
-                                You will be receiving an email from Symphony shortly asking you to verify your email address. Be sure to check your spam folders and filters. 
+                                You will receive an email from Symphony shortly with your verification link. 
                                 <br/><br/>
-                                If necessary, you can re-send the verification email by clicking the button below. 
+                                If you do not receive this email, please check your spam folder or re-send the verification. 
                             </p>
                         </i-col>
                     </Row>

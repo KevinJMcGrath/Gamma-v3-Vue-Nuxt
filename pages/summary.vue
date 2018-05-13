@@ -5,13 +5,13 @@
             <Layout class="layoutClass">
                 <Sider hide-trigger class="sidebarClass">
                     <Steps :current="5" direction="vertical">
-                        <Step title="You" content="Information about the first user."></Step>
-                        <Step title="Your Company" content="Some details about your organization."></Step>
-                        <Step title="Symphony Service" content="How should the service be configured?"></Step>
-                        <Step title="Legalese" content="Our terms and conditions."></Step>
-                        <Step title="Billing" content="Credit card and billing information."></Step>
-                        <Step title="Purchase Summary" content="Subscription summary and confirmation."></Step>
-                        <Step title="Finished!" content=""></Step>
+                        <Step title="Profile" content="Your contact information"></Step>
+                        <Step title="Organization" content="Some details about your company"></Step>
+                        <Step title="Settings" content="Choose the right Symphony settings for your team"></Step>
+                        <Step title="Terms of Service" content="Symphony terms and conditions"></Step>
+                        <Step title="Billing" content="Enter your payment information"></Step>
+                        <Step title="Confirmation" content="Review and confirm your information"></Step>
+                        <Step title="Get Started!" content=""></Step>
                     </Steps>
                 </Sider>
                 <Content class="contentClass">
@@ -23,20 +23,21 @@
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=18 :md=10 :lg=8>
-                                <p class="p2">Review Your Subscription...</p>
+                                <p class="p2">Confirmation</p>
                             </i-col>
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=20 :md=18 :lg=16>
                                 <p  class="p4">
-                                    Review the details of your subscription below. If you are satisfied, click "Purchase Now".
+                                    Please review your Symphony details below before completing your purchase.<br/>
+                                    When you are happy with your information, click "Purchase Now".
                                 </p>
                             </i-col>
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col span=16>
                                 <Card>
-                                    <p slot="title">Subscription Summary</p>
+                                    <p slot="title">Your Symphony Details</p>
                                     <p>
                                         <!-- Contact -->
                                         <Row :gutter=16>

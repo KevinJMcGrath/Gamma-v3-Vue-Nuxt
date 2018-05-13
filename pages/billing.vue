@@ -5,13 +5,13 @@
             <Layout>
                 <Sider hide-trigger class="sidebarClass">
                     <Steps :current="4" direction="vertical">
-                        <Step title="You" content="Information about the first user."></Step>
-                        <Step title="Your Company" content="Some details about your organization."></Step>
-                        <Step title="Symphony Service" content="How should the service be configured?"></Step>
-                        <Step title="Legalese" content="Our terms and conditions."></Step>
-                        <Step title="Billing" content="Credit card and billing information"></Step>
-                        <Step title="Purchase Summary" content="Subscription summary and confirmation."></Step>
-                        <Step title="Finished!" content=""></Step>
+                        <Step title="Profile" content="Your contact information"></Step>
+                        <Step title="Organization" content="Some details about your company"></Step>
+                        <Step title="Settings" content="Choose the right Symphony settings for your team"></Step>
+                        <Step title="Terms of Service" content="Symphony terms and conditions"></Step>
+                        <Step title="Billing" content="Enter your payment information"></Step>
+                        <Step title="Confirmation" content="Review and confirm your information"></Step>
+                        <Step title="Get Started!" content=""></Step>
                     </Steps>
                 </Sider>
                 <Content class="contentClass">
@@ -23,13 +23,13 @@
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=18 :md=10 :lg=8>
-                                <p class="p2">Your Billing Info...</p>
+                                <p class="p2">Billing</p>
                             </i-col>
                         </Row>
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=20 :md=18 :lg=16>
                                 <p class="p4">
-                                    It's time for the hard part. We're going to ask you some questions about the payment method you want to use to subscribe to the Symphony service. Symphony uses <a href="#">Stripe</a> as our payment processor in order to provide an easy, secure experience. 
+                                    Please provide  your payment information. Symphony uses <a href="#">Stripe</a> to process payments to provide you an easy, secure experience.  
                                 </p>
                             </i-col>
                         </Row>
@@ -81,7 +81,7 @@
                         <Row type="flex" justify="center" class="standardRow">
                             <i-col :xs=24 :sm=20 :md=18 :lg=16>
                                 <Alert show-icon>
-                                    Your credit card will <b>not</b> be charged until your instance is complete and you are provided with login credentials.
+                                    Your credit card will <b>not</b> be charged until you receive your login information.
                                 </Alert>
                             </i-col>
                         </Row>

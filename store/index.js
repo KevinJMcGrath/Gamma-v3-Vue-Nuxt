@@ -16,34 +16,34 @@ const store = () => new Vuex.Store({
 			guid: ''
 		},
 		email: {
-			email_address: 'stanz@ghostbusters.net',
+			email_address: '',
 			is_verified: false
 		},
 		user: {
-			firstname: 'Kevin',
-			lastname: 'McGrath',
-			phone: '215-828-6986'
+			firstname: '',
+			lastname: '',
+			phone: ''
 		},
 		company: {
-			name: 'Ghostbusters, Inc.',
-			industry: 'Consumer-Services'
+			name: '',
+			industry: ''
 		},
 		service: {
 			seats: 10,
-			vanity_name: 'My Company',
-			promo_code: 'GAMMA-2018'
+			vanity_name: '',
+			promo_code: ''
 		},
 		legal: {
 			terms_accepted: true
 		},
 		billing: {
-			payment_type: 'card',
-			address1: '14 North Moore Street',
-			address2: 'Tribeca',
-			city: 'New York',
-			billing_state: 'NY',
-			zip_code: '10013',
-			country: 'USA',
+			payment_type: '',
+			address1: '',
+			address2: '',
+			city: '',
+			billing_state: '',
+			zip_code: '',
+			country: '',
 			stripe_token: {}
 		},
 		pricing: {
