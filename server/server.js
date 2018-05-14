@@ -69,6 +69,7 @@ const nuxt = new Nuxt(config)
 if (config.dev) {
 	const builder = new Builder(nuxt)
 	builder.build().catch((error) => {
+		console.error('Error detected in dev config section (line 72)')
 		console.error(error)
 		process.exit(1)
 	})

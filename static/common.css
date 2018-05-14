@@ -30,7 +30,7 @@ body {
 }
 
 .layoutClassEmail {
-    background-image: url('~/assets/images/business-solutions-transp.png') !important;
+    background-image: url('../assets/images/business-solutions-transp.png') !important;
     background-position: top right !important; 
     background-repeat: no-repeat !important;    
 }

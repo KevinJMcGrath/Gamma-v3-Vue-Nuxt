@@ -134,7 +134,7 @@
                                 <Button type="primary" size="large" @click="handleGotoBilling">Back</Button>
                             </i-col>
                             <i-col :xs=6 :sm=5 :md=4 :lg=3 class-name="nextButtonCol">
-                                <Button type="primary" size="large" @click="handleGotoThankyou">Purchase Now</Button>
+                                <Button type="primary" :loading="loading" size="large" @click="handleGotoThankyou">Purchase Now</Button>
                             </i-col>
                         </Row>
                     </Layout>
@@ -150,6 +150,7 @@
     export default {
         data() {
             return {
+                loading: false,
                 page_title: 'Symphony - Review Your Purchase',
                 accordionPanel: ['servicePanel','pricePanel'],
                 serviceSummary: {
@@ -187,7 +188,7 @@
         },
         methods: {
             handleGotoThankyou() {
-
+                this.loading = true
                 //NOTE: You cannot rebind "arrow functions"
                 console.log(JSON.stringify(this.$store.state))
                 axios.post('/api/purchase-submit', this.$store.state)
@@ -202,6 +203,7 @@
 
                 }.bind(this))
                 .catch(function(error) {
+                    this.loading = false
 
                     console.error('Failed to POST')
                     console.error(error)

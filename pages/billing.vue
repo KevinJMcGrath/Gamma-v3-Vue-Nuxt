@@ -91,7 +91,7 @@
                                 <Button type="primary" size="large" @click="handleGotoLegal">Back</Button>
                             </i-col>
                             <i-col :xs=6 :sm=5 :md=4 :lg=3 class-name="nextButtonCol">
-                                <Button type="primary" size="large" @click="handleGotoSummary">Continue</Button>
+                                <Button type="primary" :loading="loading" size="large" @click="handleGotoSummary">Continue</Button>
                             </i-col>
                         </Row>
                     </Layout>
@@ -109,6 +109,7 @@
     export default {
         data() {
             return {
+                loading: false,
                 page_title: 'Symphony - Billing Details',
                 billingForm: {
                     address1: '',
@@ -211,6 +212,7 @@
                     this.billingForm.stripeError = '';
                     if (valid)
                     {
+                        this.loading = true
                         stripe.createToken(stripeElement).then(function(result) {
                             if (result.token)
                             {
@@ -223,9 +225,11 @@
                             else if (result.error) {
 
                                 this.billingForm.stripeError = result.error;
+                                this.loading = false
                                 //console.error(result.error);
                             } else {
                                 this.billingForm.stripeError = 'Unable to validate your credit card info. Please contact Symphony.'
+                                this.loading = false
                                 //console.error('Failed to obtain token from Stripe.');
                             }                   
 

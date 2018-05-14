@@ -32,7 +32,7 @@
                     </Form>
                     <Row type="flex" justify="center" class="standardRow">
                         <i-col span=3>
-                            <Button type="primary" size="large" @click="handleValidateEmail('emailForm')">Send Verification Code</Button>
+                            <Button type="primary" :loading="loading" size="large" @click="handleValidateEmail('emailForm')">Send Verification</Button>
                         </i-col>
                     </Row>
                     <Row type="flex" justify="center" class="standardRow">
@@ -77,6 +77,7 @@
 
             return {
                 page_title: 'Symphony - Verify Email',
+                loading: false,
                 emailForm: {
                     email: ''
                 },
@@ -103,6 +104,7 @@
                 this.$refs[name].validate((valid) => {
                     if (valid)
                     {
+                        this.loading = true
                         axios.post('/api/verify', { email_address: this.emailForm.email }).then(function(response) {
                             console.log('API Response: ')
                             console.log(response)
@@ -111,6 +113,7 @@
 
                         }.bind(this)).catch(function (error) {
                             console.error(error);
+                            this.loading = false
 
                             let d = 'There was a problem completing your verification request. '
 
@@ -136,14 +139,6 @@
                                 title: 'Error Verifying Email Address',
                                 desc: d,
                                 duration: 0
-
-                                /*************
-                                    TODO: test email submission fo realz
-                                    then, wire up main flow
-                                    then, figure out how to publish to GCP
-
-
-                                */
                             })
                         }.bind(this))
                         
