@@ -32,7 +32,7 @@
                         </i-col>
                     </Row>
                     <Row type="flex" justify="center" class="standardRow">
-                        <i-col :xs=18 :sm=16 :md=14 :lg=10>
+                        <i-col :xs=18 :sm=18 :md=12 :lg=12>
                             <Alert show-icon>
                                 You may need to add symphony.com to your list of spam filter exceptions.
                             </Alert>
@@ -41,11 +41,7 @@
                 </Content>
             </Layout>
             <Footer>
-                <Row type="flex" justify="end">
-                    <i-col span=2>
-                        <Button type="dashed" @click="handleStartInterview()">Start</Button>
-                    </i-col>
-                </Row>
+
             </Footer>
         </Layout>
         

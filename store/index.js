@@ -34,7 +34,7 @@ const store = () => new Vuex.Store({
 			promo_code: ''
 		},
 		legal: {
-			terms_accepted: true
+			terms_accepted: false
 		},
 		billing: {
 			payment_type: '',

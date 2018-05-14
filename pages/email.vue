@@ -15,9 +15,9 @@
                         </i-col>
                     </Row>
                     <Row type="flex" justify="center" class="standardRow">
-                        <i-col :xs=18 :sm=16 :md=14 :lg=10>
+                        <i-col :xs=18 :sm=12 :md=10 :lg=10>
                             <p class="p3">
-                                Enter your email to receive a verification code & continue your sign up. 
+                                Enter your email to receive a verification code and continue your sign up. 
                             </p>
                         </i-col>
                     </Row>
@@ -31,7 +31,7 @@
                         </Row>
                     </Form>
                     <Row type="flex" justify="center" class="standardRow">
-                        <i-col span=2>
+                        <i-col span=3>
                             <Button type="primary" size="large" @click="handleValidateEmail('emailForm')">Send Verification Code</Button>
                         </i-col>
                     </Row>
@@ -78,7 +78,7 @@
             return {
                 page_title: 'Symphony - Verify Email',
                 emailForm: {
-                    email: 'kevin.mcgrath@symphony.com'
+                    email: ''
                 },
                 validation_rules: {
                     email: [

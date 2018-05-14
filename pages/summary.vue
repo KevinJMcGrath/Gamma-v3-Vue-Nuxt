@@ -47,7 +47,7 @@
                                             <!-- Spacer Element -->
                                             <!--<i-col span=2 style="text-align:center;border: 1px solid purple;">_@_</i-col>-->
 
-                                            <i-col span=4 style="text-align:right;font-weight:bold;">Email Address:</i-col>
+                                            <i-col span=4 style="text-align:right;font-weight:bold;">Email:</i-col>
                                             <i-col span=8 style="text-align:left;">{{ $store.state.email.email_address }}</i-col>
                                         </Row>
                                         <!-- Company -->
